@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "Theme.h"
+#import "AppDelegate+Appearance.h"
+#import <Photos/Photos.h>
 
 @interface AppDelegate ()
 
@@ -16,16 +17,21 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+     [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
+    [self setupTheme];
+    UIViewController *controller;
     
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"navImgOverlay"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 145, 0, 0) resizingMode:UIImageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
-    [UINavigationBar appearance].translucent = NO;
-    [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor],
-                                                     NSFontAttributeName: [UIFont primarySemiBoldFont]};
+    if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        controller = storyboard.instantiateInitialViewController;
+    } else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PermissionViewController" bundle:nil];
+        controller = storyboard.instantiateInitialViewController;
+    }
     
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]]
-     setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor themeBrownColor],
-                              NSFontAttributeName : [UIFont primaryFont],} forState:UIControlStateNormal];
-
+    [[self window] setRootViewController:controller];
+    [[self window] makeKeyAndVisible];
+    
     return YES;
 }
 

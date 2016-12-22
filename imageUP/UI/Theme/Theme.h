@@ -11,7 +11,7 @@
 
 @interface Theme : NSObject
 
-extern CGFloat const ImageViewCornerRadius;
+extern CGFloat const CornerRadius;
 @end
 
 @interface UIFont (Helpers)

@@ -10,7 +10,7 @@
 
 @implementation Theme
 
-CGFloat const ImageViewCornerRadius = 4.0f;
+CGFloat const CornerRadius = 6.0f;
 
 @end
 

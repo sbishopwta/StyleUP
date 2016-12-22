@@ -11,6 +11,7 @@
 #import "PhotoCollectionViewCell.h"
 #import <Photos/Photos.h>
 #import "PHAsset+ImageKey.h"
+#import "UICollectionViewCell+ReusableIdentifier.h"
 
 @interface PhotosCollectionViewController () <PHPhotoLibraryChangeObserver, FilterDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
@@ -24,10 +25,12 @@
 @end
 
 @implementation PhotosCollectionViewController
-const NSInteger numberOfColumns = 4;
+
+const NSInteger NumberOfColumns = 4;
+NSString * const PhotoSortDescriptorKey = @"creationDate";
 
 - (void)dealloc {
-    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+//    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -46,10 +49,12 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (void)setupNavigationBar {
-    
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navTitle"]];
     
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Filter", nil).uppercaseString style:UIBarButtonItemStylePlain target:self action:@selector(presentFilterSelectionController)];
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Filter", nil).uppercaseString
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(presentFilterSelectionController)];
     self.navigationItem.rightBarButtonItem = filterButton;
 }
 
@@ -60,8 +65,8 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (void)requestPhotoLibraryPermission {
-    PHFetchOptions *fetchOptions = [PHFetchOptions new];                        //may want to fetch a different asset collection
-    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:false]];
+    PHFetchOptions *fetchOptions = [PHFetchOptions new];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:PhotoSortDescriptorKey ascending:false]];
     self.allPhotos = [PHAsset fetchAssetsWithOptions:fetchOptions];
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
@@ -70,13 +75,13 @@ const NSInteger numberOfColumns = 4;
 - (void)configureCollectionView {
     
     // Register cell classes
-    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCollectionViewCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
     
     CGSize screenSize = self.view.frame.size;
-    double cellWidth = (screenSize.width / numberOfColumns);
-    double padding = screenSize.width - cellWidth * numberOfColumns;
-    CGSize cellSize = CGSizeMake(floor(cellWidth) + padding,
-                                 floor(cellWidth) + padding);
+    double cellWidth = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / NumberOfColumns) -  self.flowLayout.minimumLineSpacing;
+    
+    CGSize cellSize = CGSizeMake(cellWidth,
+                                 cellWidth);
     
     self.flowLayout.itemSize = cellSize;
 }
@@ -88,7 +93,7 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCollectionViewCell" forIndexPath:indexPath];
+    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier] forIndexPath:indexPath];
     
     PHAsset *imageAsset = [self.allPhotos objectAtIndex:indexPath.item];
     cell.imageIdentifier = imageAsset.localIdentifier;
@@ -104,9 +109,7 @@ const NSInteger numberOfColumns = 4;
         [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
                                            contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                                
-                                               if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-                                                   [cell configureWithImage:result];
-                                               }
+                                               
                                                
                                                if (weakSelf.filterName) {
                                                    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
@@ -123,6 +126,9 @@ const NSInteger numberOfColumns = 4;
                                                    [self.operationQueue addOperation:operation];
                                                    
                                                } else {
+                                                   if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
+                                                       [cell configureWithImage:result];
+                                                   }
                                                    [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
                                                }
                                            }];
@@ -138,7 +144,7 @@ const NSInteger numberOfColumns = 4;
 
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+   //cancel the queue?
 }
 
 - (UIImage *)processImageWithFilter:(NSString *)filterName image:(CIImage *)ciImage asset:(PHAsset *)imageAsset

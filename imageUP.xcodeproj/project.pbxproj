@@ -26,6 +26,10 @@
 		FD901C931E0BA8F300CF07E9 /* proximanova-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD901C901E0BA86000CF07E9 /* proximanova-regular.ttf */; };
 		FD901C941E0BA8F300CF07E9 /* proximanova-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */; };
 		FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C981E0BAA4A00CF07E9 /* Theme.m */; };
+		FD901C9C1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C9B1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m */; };
+		FD901CA01E0BC74400CF07E9 /* PermissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C9F1E0BC74400CF07E9 /* PermissionViewController.m */; };
+		FD901CA41E0BC7C100CF07E9 /* PermissionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD901CA31E0BC7C100CF07E9 /* PermissionViewController.storyboard */; };
+		FD901CA71E0BC8DA00CF07E9 /* AppDelegate+Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901CA61E0BC8DA00CF07E9 /* AppDelegate+Appearance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,13 @@
 		FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-semibold.ttf"; sourceTree = "<group>"; };
 		FD901C971E0BAA4A00CF07E9 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Theme.h; path = UI/Theme/Theme.h; sourceTree = "<group>"; };
 		FD901C981E0BAA4A00CF07E9 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Theme.m; path = UI/Theme/Theme.m; sourceTree = "<group>"; };
+		FD901C9A1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UICollectionViewCell+ReusableIdentifier.h"; path = "Categories/UICollectionViewCell+ReusableIdentifier.h"; sourceTree = "<group>"; };
+		FD901C9B1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UICollectionViewCell+ReusableIdentifier.m"; path = "Categories/UICollectionViewCell+ReusableIdentifier.m"; sourceTree = "<group>"; };
+		FD901C9E1E0BC74400CF07E9 /* PermissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionViewController.h; path = UI/Permission/PermissionViewController.h; sourceTree = "<group>"; };
+		FD901C9F1E0BC74400CF07E9 /* PermissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionViewController.m; path = UI/Permission/PermissionViewController.m; sourceTree = "<group>"; };
+		FD901CA31E0BC7C100CF07E9 /* PermissionViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = PermissionViewController.storyboard; path = UI/Permission/PermissionViewController.storyboard; sourceTree = "<group>"; };
+		FD901CA51E0BC8DA00CF07E9 /* AppDelegate+Appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+Appearance.h"; path = "Categories/AppDelegate+Appearance.h"; sourceTree = "<group>"; };
+		FD901CA61E0BC8DA00CF07E9 /* AppDelegate+Appearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+Appearance.m"; path = "Categories/AppDelegate+Appearance.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +158,7 @@
 		FD0D41151E0966B6008185B1 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				FD901C9D1E0BC6C000CF07E9 /* Permission */,
 				FD901C951E0BAA0E00CF07E9 /* Theme */,
 				FD0D411C1E0A1D38008185B1 /* Filter Selection */,
 				FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */,
@@ -184,6 +196,10 @@
 			children = (
 				FD901C8A1E0BA0DB00CF07E9 /* PHAsset+ImageKey.h */,
 				FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */,
+				FD901C9A1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.h */,
+				FD901C9B1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m */,
+				FD901CA51E0BC8DA00CF07E9 /* AppDelegate+Appearance.h */,
+				FD901CA61E0BC8DA00CF07E9 /* AppDelegate+Appearance.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -195,6 +211,16 @@
 				FD901C981E0BAA4A00CF07E9 /* Theme.m */,
 			);
 			name = Theme;
+			sourceTree = "<group>";
+		};
+		FD901C9D1E0BC6C000CF07E9 /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				FD901C9E1E0BC74400CF07E9 /* PermissionViewController.h */,
+				FD901C9F1E0BC74400CF07E9 /* PermissionViewController.m */,
+				FD901CA31E0BC7C100CF07E9 /* PermissionViewController.storyboard */,
+			);
+			name = Permission;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +310,7 @@
 				FD901C941E0BA8F300CF07E9 /* proximanova-semibold.ttf in Resources */,
 				FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */,
 				FD0D40FD1E09636C008185B1 /* LaunchScreen.storyboard in Resources */,
+				FD901CA41E0BC7C100CF07E9 /* PermissionViewController.storyboard in Resources */,
 				FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */,
 				FD0D41211E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard in Resources */,
 				FD0D40FA1E09636C008185B1 /* Assets.xcassets in Resources */,
@@ -307,13 +334,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD0D40F21E09636C008185B1 /* AppDelegate.m in Sources */,
+				FD901C9C1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m in Sources */,
 				FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */,
 				FD0D411F1E0A1D8D008185B1 /* FilterSelectionTableViewController.m in Sources */,
 				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
 				FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */,
 				FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */,
 				FD0D40EF1E09636C008185B1 /* main.m in Sources */,
+				FD901CA71E0BC8DA00CF07E9 /* AppDelegate+Appearance.m in Sources */,
 				FD901C8C1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m in Sources */,
+				FD901CA01E0BC74400CF07E9 /* PermissionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
