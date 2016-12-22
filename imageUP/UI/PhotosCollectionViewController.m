@@ -13,7 +13,7 @@
 #import "PHAsset+ImageKey.h"
 #import "UICollectionViewCell+ReusableIdentifier.h"
 
-@interface PhotosCollectionViewController () <PHPhotoLibraryChangeObserver, FilterDelegate>
+@interface PhotosCollectionViewController () <FilterDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *allPhotos;
 @property (strong, nonatomic) PHCachingImageManager *imageCachingManager;
@@ -34,7 +34,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     [self setup];
     [self setupNavigationBar];
     [self requestPhotoAssets];
-    [self configureCollectionView];
+    [self configureItemSize];
 }
 
 - (void)setup {
@@ -44,6 +44,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
     self.context = [CIContext contextWithEAGLContext:myEAGLContext options:options];
     self.imageCachingManager = [PHCachingImageManager new];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
 }
 
 - (void)setupNavigationBar {
@@ -57,6 +58,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 }
 
 - (void)presentFilterSelectionController {
+    [self.operationQueue cancelAllOperations];
     FilterSelectionCollectionViewController *filterSelectionController = [FilterSelectionCollectionViewController buildWithDelegate:self];
     UINavigationController *filterSelectionNavigationController = [[UINavigationController alloc] initWithRootViewController:filterSelectionController];
     [self.navigationController presentViewController:filterSelectionNavigationController animated:YES completion:nil];
@@ -68,9 +70,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     self.allPhotos = [PHAsset fetchAssetsWithOptions:fetchOptions];
 }
 
-- (void)configureCollectionView {
-    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
-    
+- (void)configureItemSize {
     CGSize screenSize = self.view.frame.size;
     NSInteger numberOfColumns = 4;
     double cellDimension = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / numberOfColumns) - self.flowLayout.minimumLineSpacing;
@@ -102,8 +102,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
         [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
                                            contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                                
-                                               
-                                               
                                                if (weakSelf.filterName) {
                                                    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
                                                        CIImage *ciImage = [[CIImage alloc] initWithImage:result options:@{kCIContextWorkingColorSpace:[NSNull null]}];
@@ -124,6 +122,8 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
                                                    }
                                                    if (result != nil) {
                                                        [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
+                                                   } else {
+                                                       NSLog(@"result was nil for key: %@", [imageAsset imageKeyFromFilterName:weakSelf.filterName]);
                                                    }
                                                }
                                            }];
@@ -135,11 +135,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     }
     
     return cell;
-}
-
-
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-   //cancel the queue?
 }
 
 - (UIImage *)processImageWithFilter:(NSString *)filterName image:(CIImage *)ciImage asset:(PHAsset *)imageAsset
@@ -155,18 +150,14 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
         CGImageRelease(cgImage);
         if (newImage != nil) {
             [self.cache setObject:newImage forKey:imageKey];
+        } else {
+            NSLog(@"newImage was nil for key: %@", imageKey);
         }
         
         return newImage;
     } else {
         return cachedImage;
     }
-}
-
-#pragma mark <PHPhotoLibraryChangeObserver>
-
-- (void)photoLibraryDidChange:(PHChange *)changeInstance {
-    [self.collectionView reloadData];
 }
 
 #pragma mark - Filter Delegate
