@@ -10,8 +10,6 @@
 #import "FilterSelectionTableViewCell.h"
 
 
-
-
 typedef NS_ENUM(NSInteger, Filter) {
     FilterSepia,
     FilterInvert,
@@ -43,12 +41,19 @@ typedef NS_ENUM(NSInteger, Filter) {
 }
 
 - (void)setupNavigationBar {
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = cancelButton;
+    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Reset", nil) style:UIBarButtonItemStyleDone target:self action:@selector(reset)];
+    self.navigationItem.leftBarButtonItem = resetButton;
 }
 
 - (void)dismiss {
     [self.navigationController dismissViewControllerAnimated:true completion:nil];
+}
+
+- (void)reset {
+    [self.delegate didSelectFilter:nil];
+    [self dismiss];
 }
 
 #pragma mark - Table view data source

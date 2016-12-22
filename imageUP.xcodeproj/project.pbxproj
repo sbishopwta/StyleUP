@@ -20,6 +20,8 @@
 		FD0D41211E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41201E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard */; };
 		FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41231E0A2360008185B1 /* FilterSelectionTableViewCell.m */; };
 		FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */; };
+		FD901C8C1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */; };
+		FD901C8E1E0BA1FF00CF07E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		FD0D41221E0A2360008185B1 /* FilterSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterSelectionTableViewCell.h; path = UI/Filter/FilterSelectionTableViewCell.h; sourceTree = "<group>"; };
 		FD0D41231E0A2360008185B1 /* FilterSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterSelectionTableViewCell.m; path = UI/Filter/FilterSelectionTableViewCell.m; sourceTree = "<group>"; };
 		FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterSelectionTableViewCell.xib; path = UI/Filter/FilterSelectionTableViewCell.xib; sourceTree = "<group>"; };
+		FD901C8A1E0BA0DB00CF07E9 /* PHAsset+ImageKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHAsset+ImageKey.h"; path = "Categories/PHAsset+ImageKey.h"; sourceTree = "<group>"; };
+		FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHAsset+ImageKey.m"; path = "Categories/PHAsset+ImageKey.m"; sourceTree = "<group>"; };
+		FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,9 +101,9 @@
 		FD0D40EC1E09636C008185B1 /* imageUP */ = {
 			isa = PBXGroup;
 			children = (
-				FD0D41271E0B887C008185B1 /* Utilities */,
 				FD0D40F01E09636C008185B1 /* AppDelegate.h */,
 				FD0D40F11E09636C008185B1 /* AppDelegate.m */,
+				FD0D41271E0B887C008185B1 /* Categories */,
 				FD0D41151E0966B6008185B1 /* UI */,
 				FD0D40F61E09636C008185B1 /* Main.storyboard */,
 				FD0D40F91E09636C008185B1 /* Assets.xcassets */,
@@ -113,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				FD0D40EE1E09636C008185B1 /* main.m */,
+				FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -160,11 +166,13 @@
 			name = "Filter Selection";
 			sourceTree = "<group>";
 		};
-		FD0D41271E0B887C008185B1 /* Utilities */ = {
+		FD0D41271E0B887C008185B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				FD901C8A1E0BA0DB00CF07E9 /* PHAsset+ImageKey.h */,
+				FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */,
 			);
-			name = Utilities;
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +239,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 			);
 			mainGroup = FD0D40E11E09636C008185B1;
@@ -255,6 +262,7 @@
 				FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */,
 				FD0D41211E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard in Resources */,
 				FD0D40FA1E09636C008185B1 /* Assets.xcassets in Resources */,
+				FD901C8E1E0BA1FF00CF07E9 /* Localizable.strings in Resources */,
 				FD0D40F81E09636C008185B1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +287,7 @@
 				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
 				FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */,
 				FD0D40EF1E09636C008185B1 /* main.m in Sources */,
+				FD901C8C1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +486,7 @@
 				FD0D410E1E09636C008185B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD0D410F1E09636C008185B1 /* Build configuration list for PBXNativeTarget "imageUPTests" */ = {
 			isa = XCConfigurationList;
@@ -485,6 +495,7 @@
 				FD0D41111E09636C008185B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

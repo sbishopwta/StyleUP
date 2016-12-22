@@ -10,26 +10,16 @@
 #import "PhotosCollectionViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import <Photos/Photos.h>
-
-@interface PHAsset (imageKey)
-- (NSString *)imageKeyFromFilterName:(NSString *)filterName;
-@end
-
-@implementation PHAsset (imageKey)
-- (NSString *)imageKeyFromFilterName:(NSString *)filterName {
-    return [filterName stringByAppendingString:self.localIdentifier];
-}
-
-@end
+#import "PHAsset+ImageKey.h"
 
 @interface PhotosCollectionViewController () <PHPhotoLibraryChangeObserver, FilterDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *allPhotos;
 @property (strong, nonatomic) PHCachingImageManager *imageCachingManager;
-@property (nonatomic, strong) CIContext *context;
-@property (nonatomic, strong) NSString *filterName;
-@property (nonatomic, strong) NSCache *cache;
-@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) CIContext *context;
+@property (copy, nonatomic) NSString *filterName;
+@property (strong, nonatomic) NSCache *cache;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 
 @end
 
@@ -55,7 +45,7 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (void)setupNavigationBar {
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(presentFilterSelectionController)];
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Filter", nil) style:UIBarButtonItemStylePlain target:self action:@selector(presentFilterSelectionController)];
     self.navigationItem.rightBarButtonItem = filterButton;
 }
 
@@ -78,25 +68,14 @@ const NSInteger numberOfColumns = 4;
     // Register cell classes
     [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCollectionViewCell"];
     
-//    CGSize screenSize = self.view.frame.size;
-//    double cellWidth = (screenSize.width / numberOfColumns);
-//    double padding = screenSize.width - cellWidth * numberOfColumns;
-//    CGSize cellSize = CGSizeMake(floor(screenSize.width/numberOfColumns) + padding,
-//                                 floor(screenSize.height/numberOfColumns) + padding);
-//    
-//    self.flowLayout.itemSize = cellSize;
+    CGSize screenSize = self.view.frame.size;
+    double cellWidth = (screenSize.width / numberOfColumns);
+    double padding = screenSize.width - cellWidth * numberOfColumns;
+    CGSize cellSize = CGSizeMake(floor(cellWidth) + padding,
+                                 floor(cellWidth) + padding);
+    
+    self.flowLayout.itemSize = cellSize;
 }
-
-//[NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{
-//    
-//    // background thread code
-//    
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        
-//        // Main thread work (UI usually)
-//        
-//    }];
-//}];
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -108,50 +87,55 @@ const NSInteger numberOfColumns = 4;
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCollectionViewCell" forIndexPath:indexPath];
     
     PHAsset *imageAsset = [self.allPhotos objectAtIndex:indexPath.item];
-    UIImage *cachedImage = [self.cache objectForKey:[imageAsset imageKeyFromFilterName:self.filterName]];
+    cell.imageIdentifier = imageAsset.localIdentifier;
+    NSString *key = [imageAsset imageKeyFromFilterName:self.filterName];
+    UIImage *cachedImage = [self.cache objectForKey:key];
     if (cachedImage == nil) {
         PHImageRequestOptions *options = [PHImageRequestOptions new];
         options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
-        cell.imageIdentifier = imageAsset.localIdentifier;
+        
         
         __weak typeof(self) weakSelf = self;
         
-        [self.imageCachingManager requestImageForAsset:imageAsset targetSize:CGSizeMake(80, 80) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-//            if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-//                [cell configureWithImage:result];
-//            }
-            
-            
-            
-            if (weakSelf.filterName) {
-                NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-                    CIImage *ciImage = [[CIImage alloc] initWithImage:result options:@{kCIContextWorkingColorSpace:[NSNull null]}];
-                    UIImage *filteredImage = [weakSelf processImageWithFilter:weakSelf.filterName image:ciImage asset:imageAsset];
-                    
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        
-                        
-                        if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-                            [cell configureWithImage:filteredImage];
-                        }
-                    }];
-                    
-                }];
-                
-                [self.operationQueue addOperation:operation];
-
-            } else {
-                [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
-            }
-        }];
+        [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
+                                           contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                               
+                                               if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
+                                                   [cell configureWithImage:result];
+                                               }
+                                               
+                                               if (weakSelf.filterName) {
+                                                   NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+                                                       CIImage *ciImage = [[CIImage alloc] initWithImage:result options:@{kCIContextWorkingColorSpace:[NSNull null]}];
+                                                       UIImage *filteredImage = [weakSelf processImageWithFilter:weakSelf.filterName image:ciImage asset:imageAsset];
+                                                       
+                                                       [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                           if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
+                                                               [cell configureWithImage:filteredImage];
+                                                           }
+                                                       }];
+                                                   }];
+                                                   
+                                                   [self.operationQueue addOperation:operation];
+                                                   
+                                               } else {
+                                                   [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
+                                               }
+                                           }];
         
     } else {
-        [cell configureWithImage:cachedImage];
+        if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
+            [cell configureWithImage:cachedImage];
+        }
     }
     
     return cell;
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
 
 - (UIImage *)processImageWithFilter:(NSString *)filterName image:(CIImage *)ciImage asset:(PHAsset *)imageAsset
 {
