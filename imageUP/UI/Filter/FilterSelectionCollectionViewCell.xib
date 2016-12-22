@@ -26,7 +26,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter3" translatesAutoresizingMaskIntoConstraints="NO" id="a17-fe-t3q">
                         <rect key="frame" x="0.0" y="0.0" width="284" height="284"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Invert" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCS-VR-yFC">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Invert" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TCS-VR-yFC">
                         <rect key="frame" x="82" y="149" width="120.5" height="26.5"/>
                         <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="24"/>
                         <nil key="textColor"/>

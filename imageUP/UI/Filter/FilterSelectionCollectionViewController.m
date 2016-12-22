@@ -8,21 +8,7 @@
 
 #import "FilterSelectionCollectionViewController.h"
 #import "FilterSelectionCollectionViewCell.h"
-
-
-typedef NS_ENUM(NSInteger, Filter) {
-    FilterSepia,
-    FilterInvert,
-    FilterPosterize,
-    FilterMonochrome,
-    FilterBlur,
-    FilterFade,
-    FilterNoir,
-    FilterCrystallize,
-    FilterInstant,
-    FilterComic,
-    FilterCount
-};
+#import "NSString+FilterDisplayName.h"
 
 @interface FilterSelectionCollectionViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
@@ -41,34 +27,6 @@ typedef NS_ENUM(NSInteger, Filter) {
     return filterContoller;
 }
 
-- (NSString *)displayNameForFilter:(Filter)filter {
-    switch (filter) {
-        case FilterSepia:
-            return @"Sepia";
-        case FilterInvert:
-            return @"Color Invert";
-        case FilterPosterize:
-            return @"Posterize";
-        case FilterMonochrome:
-            return @"Monochrome";
-        case FilterBlur:
-            return @"Motion Blur";
-        case FilterFade:
-            return @"Fade";
-        case FilterNoir:
-            return @"Noir";
-        case FilterCrystallize:
-            return @"Crystallize";
-        case FilterInstant:
-            return @"Instant";
-        case FilterComic:
-            return @"Comic";
-        default:
-            NSLog(@"Display name case %li not handled", (long)filter);
-            return @"";
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNavigationBar];
@@ -80,7 +38,8 @@ typedef NS_ENUM(NSInteger, Filter) {
           forCellWithReuseIdentifier:NSStringFromClass([FilterSelectionCollectionViewCell class])];
     CGSize screenSize = self.view.frame.size;
     NSInteger numberOfColumns = 2;
-    double cellDimension = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / numberOfColumns) - self.flowLayout.minimumLineSpacing;
+    double sectionInsetPadding = self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right;
+    double cellDimension = ((screenSize.width - sectionInsetPadding) / numberOfColumns) - (self.flowLayout.minimumLineSpacing / numberOfColumns);
     CGSize cellSize = CGSizeMake(cellDimension,
                                  cellDimension);
     self.flowLayout.itemSize = cellSize;
@@ -117,7 +76,7 @@ typedef NS_ENUM(NSInteger, Filter) {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FilterSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FilterSelectionCollectionViewCell class])
                                                                                         forIndexPath:indexPath];
-    NSString *filterName = [self displayNameForFilter:indexPath.item];
+    NSString *filterName = [NSString displayNameForFilter:indexPath.item];
     [cell configureWithFilterName:filterName];
     return cell;
 }

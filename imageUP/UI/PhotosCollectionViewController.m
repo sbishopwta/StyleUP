@@ -44,7 +44,8 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
     self.context = [CIContext contextWithEAGLContext:myEAGLContext options:options];
     self.imageCachingManager = [PHCachingImageManager new];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil]
+          forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
 }
 
 - (void)setupNavigationBar {
@@ -73,7 +74,8 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 - (void)configureItemSize {
     CGSize screenSize = self.view.frame.size;
     NSInteger numberOfColumns = 4;
-    double cellDimension = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / numberOfColumns) - self.flowLayout.minimumLineSpacing;
+    double sectionInsetPadding = self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right;
+    double cellDimension = ((screenSize.width - sectionInsetPadding) / numberOfColumns) - self.flowLayout.minimumLineSpacing;
     CGSize cellSize = CGSizeMake(cellDimension,
                                  cellDimension);
     self.flowLayout.itemSize = cellSize;
@@ -145,6 +147,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     if (cachedImage == nil) {
         CIFilter *filter = [CIFilter filterWithName:filterName];
         [filter setValue:ciImage forKey:kCIInputImageKey];
+        //        [filter.outputImage imageByCroppingToRect:ciImage.extent];
         CGImageRef cgImage = [self.context createCGImage:filter.outputImage fromRect:filter.outputImage.extent];
         UIImage *newImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
