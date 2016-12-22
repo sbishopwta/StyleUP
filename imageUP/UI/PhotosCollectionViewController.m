@@ -6,7 +6,7 @@
 //  Copyright © 2016 Steven Bishop. All rights reserved.
 //
 
-#import "FilterSelectionTableViewController.h"
+#import "FilterSelectionCollectionViewController.h"
 #import "PhotosCollectionViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import <Photos/Photos.h>
@@ -26,26 +26,24 @@
 
 @implementation PhotosCollectionViewController
 
-const NSInteger NumberOfColumns = 4;
 NSString * const PhotoSortDescriptorKey = @"creationDate";
-
-- (void)dealloc {
-//    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
-}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    [self setup];
+    [self setupNavigationBar];
+    [self requestPhotoAssets];
+    [self configureCollectionView];
+}
+
+- (void)setup {
     self.cache = [NSCache new];
     self.operationQueue = [NSOperationQueue new];
     EAGLContext *myEAGLContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
     self.context = [CIContext contextWithEAGLContext:myEAGLContext options:options];
-    
     self.imageCachingManager = [PHCachingImageManager new];
-    [self setupNavigationBar];
-    [self requestPhotoLibraryPermission];
-    [self configureCollectionView];
 }
 
 - (void)setupNavigationBar {
@@ -59,30 +57,25 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 }
 
 - (void)presentFilterSelectionController {
-    FilterSelectionTableViewController *filterSelectionController = [FilterSelectionTableViewController buildWithDelegate:self];
+    FilterSelectionCollectionViewController *filterSelectionController = [FilterSelectionCollectionViewController buildWithDelegate:self];
     UINavigationController *filterSelectionNavigationController = [[UINavigationController alloc] initWithRootViewController:filterSelectionController];
     [self.navigationController presentViewController:filterSelectionNavigationController animated:YES completion:nil];
 }
 
-- (void)requestPhotoLibraryPermission {
+- (void)requestPhotoAssets {
     PHFetchOptions *fetchOptions = [PHFetchOptions new];
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:PhotoSortDescriptorKey ascending:false]];
     self.allPhotos = [PHAsset fetchAssetsWithOptions:fetchOptions];
-    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
-
 - (void)configureCollectionView {
-    
-    // Register cell classes
     [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
     
     CGSize screenSize = self.view.frame.size;
-    double cellWidth = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / NumberOfColumns) -  self.flowLayout.minimumLineSpacing;
-    
-    CGSize cellSize = CGSizeMake(cellWidth,
-                                 cellWidth);
-    
+    NSInteger numberOfColumns = 4;
+    double cellDimension = ((screenSize.width - (self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right)) / numberOfColumns) - self.flowLayout.minimumLineSpacing;
+    CGSize cellSize = CGSizeMake(cellDimension,
+                                 cellDimension);
     self.flowLayout.itemSize = cellSize;
 }
 
@@ -129,7 +122,9 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
                                                    if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
                                                        [cell configureWithImage:result];
                                                    }
-                                                   [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
+                                                   if (result != nil) {
+                                                       [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
+                                                   }
                                                }
                                            }];
         
@@ -158,7 +153,9 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
         CGImageRef cgImage = [self.context createCGImage:filter.outputImage fromRect:filter.outputImage.extent];
         UIImage *newImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
-        [self.cache setObject:newImage forKey:imageKey];
+        if (newImage != nil) {
+            [self.cache setObject:newImage forKey:imageKey];
+        }
         
         return newImage;
     } else {

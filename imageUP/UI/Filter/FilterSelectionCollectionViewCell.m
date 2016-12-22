@@ -1,19 +1,18 @@
 //
-//  FilterSelectionTableViewCell.m
+//  FilterSelectionCollectionViewCell.m
 //  imageUP
 //
-//  Created by Steven Bishop on 12/20/16.
+//  Created by Steven Bishop on 12/22/16.
 //  Copyright © 2016 Steven Bishop. All rights reserved.
 //
 
-#import "FilterSelectionTableViewCell.h"
+#import "FilterSelectionCollectionViewCell.h"
 
-@interface FilterSelectionTableViewCell ()
+@interface FilterSelectionCollectionViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-
 @end
 
-@implementation FilterSelectionTableViewCell
+@implementation FilterSelectionCollectionViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -23,11 +22,5 @@
 - (void)configureWithFilterName:(NSString *)filterName {
     self.titleLabel.text = filterName;
 }
-
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    self.titleLabel.text = nil;
-}
-
 
 @end

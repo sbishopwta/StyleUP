@@ -1,14 +1,14 @@
 //
-//  FilterSelectionTableViewCell.h
+//  FilterSelectionCollectionViewCell.h
 //  imageUP
 //
-//  Created by Steven Bishop on 12/20/16.
+//  Created by Steven Bishop on 12/22/16.
 //  Copyright © 2016 Steven Bishop. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface FilterSelectionTableViewCell : UITableViewCell
+@interface FilterSelectionCollectionViewCell : UICollectionViewCell
 - (void)configureWithFilterName:(NSString *)filterName;
 
 @end

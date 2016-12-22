@@ -14,7 +14,7 @@
 @end
 
 
-@interface FilterSelectionTableViewController : UITableViewController
+@interface FilterSelectionCollectionViewController : UICollectionViewController
 + (instancetype)buildWithDelegate:(id<FilterDelegate>)delegate;
 
 @end
