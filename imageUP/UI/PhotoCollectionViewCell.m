@@ -15,16 +15,9 @@
 
 @implementation PhotoCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
 - (void)configureWithImage:(UIImage *)image {
     self.imageView.image = image;
 }
-
-
 
 - (void)prepareForReuse {
     [super prepareForReuse];

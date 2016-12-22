@@ -60,6 +60,9 @@
 		FD901C8A1E0BA0DB00CF07E9 /* PHAsset+ImageKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHAsset+ImageKey.h"; path = "Categories/PHAsset+ImageKey.h"; sourceTree = "<group>"; };
 		FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHAsset+ImageKey.m"; path = "Categories/PHAsset+ImageKey.m"; sourceTree = "<group>"; };
 		FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		FD901C8F1E0BA86000CF07E9 /* proximanova-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-light.ttf"; sourceTree = "<group>"; };
+		FD901C901E0BA86000CF07E9 /* proximanova-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-regular.ttf"; sourceTree = "<group>"; };
+		FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,9 @@
 		FD0D40ED1E09636C008185B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FD901C8F1E0BA86000CF07E9 /* proximanova-light.ttf */,
+				FD901C901E0BA86000CF07E9 /* proximanova-regular.ttf */,
+				FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */,
 				FD0D40EE1E09636C008185B1 /* main.m */,
 				FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */,
 			);
