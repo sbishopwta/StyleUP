@@ -9,7 +9,9 @@
 #import "UICollectionViewCell+ReusableIdentifier.h"
 
 @implementation UICollectionViewCell (ReusableIdentifier)
+
 + (NSString *)reuseIdentifier {
     return NSStringFromClass([self class]);
 }
+
 @end

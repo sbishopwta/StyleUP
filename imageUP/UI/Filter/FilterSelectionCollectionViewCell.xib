@@ -46,6 +46,7 @@
             </constraints>
             <size key="customSize" width="284" height="284"/>
             <connections>
+                <outlet property="imageView" destination="a17-fe-t3q" id="hJ2-k4-Bdk"/>
                 <outlet property="titleLabel" destination="TCS-VR-yFC" id="2aO-3O-seC"/>
             </connections>
             <point key="canvasLocation" x="-58" y="96"/>

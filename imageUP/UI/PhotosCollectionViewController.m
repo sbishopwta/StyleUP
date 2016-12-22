@@ -29,8 +29,8 @@
 NSString * const PhotoSortDescriptorKey = @"creationDate";
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
+    
     [self setup];
     [self setupNavigationBar];
     [self requestPhotoAssets];
@@ -40,6 +40,8 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 - (void)setup {
     self.cache = [NSCache new];
     self.operationQueue = [NSOperationQueue new];
+    [NSOperationQueue mainQueue].maxConcurrentOperationCount = 50;
+    self.operationQueue.maxConcurrentOperationCount = 50;
     EAGLContext *myEAGLContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
     self.context = [CIContext contextWithEAGLContext:myEAGLContext options:options];
@@ -59,7 +61,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 }
 
 - (void)presentFilterSelectionController {
-    [self.operationQueue cancelAllOperations];
     FilterSelectionCollectionViewController *filterSelectionController = [FilterSelectionCollectionViewController buildWithDelegate:self];
     UINavigationController *filterSelectionNavigationController = [[UINavigationController alloc] initWithRootViewController:filterSelectionController];
     [self.navigationController presentViewController:filterSelectionNavigationController animated:YES completion:nil];
@@ -88,56 +89,79 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier] forIndexPath:indexPath];
+    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]
+                                                                              forIndexPath:indexPath];
     
     PHAsset *imageAsset = [self.allPhotos objectAtIndex:indexPath.item];
     cell.imageIdentifier = imageAsset.localIdentifier;
-    NSString *key = [imageAsset imageKeyFromFilterName:self.filterName];
-    UIImage *cachedImage = [self.cache objectForKey:key];
-    if (cachedImage == nil) {
-        PHImageRequestOptions *options = [PHImageRequestOptions new];
-        options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    NSString *filteredImageKey = [imageAsset imageKeyFromFilterName:self.filterName];
+    NSString *unfilteredImageKey = [imageAsset imageKeyForUnfilteredImage];
+    UIImage *cachedFilteredImage = [self.cache objectForKey:filteredImageKey];
+    UIImage *cachedUnfilteredImage = [self.cache objectForKey:unfilteredImageKey];
+    
+    if (cachedFilteredImage == nil && cachedUnfilteredImage == nil) {
+        [self requestImage:imageAsset forCell:cell];
         
-        
-        __weak typeof(self) weakSelf = self;
-        
-        [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
-                                           contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                                               
-                                               if (weakSelf.filterName) {
-                                                   NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-                                                       CIImage *ciImage = [[CIImage alloc] initWithImage:result options:@{kCIContextWorkingColorSpace:[NSNull null]}];
-                                                       UIImage *filteredImage = [weakSelf processImageWithFilter:weakSelf.filterName image:ciImage asset:imageAsset];
-                                                       
-                                                       [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                                                           if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-                                                               [cell configureWithImage:filteredImage];
-                                                           }
-                                                       }];
-                                                   }];
-                                                   
-                                                   [self.operationQueue addOperation:operation];
-                                                   
-                                               } else {
-                                                   if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-                                                       [cell configureWithImage:result];
-                                                   }
-                                                   if (result != nil) {
-                                                       [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
-                                                   } else {
-                                                       NSLog(@"result was nil for key: %@", [imageAsset imageKeyFromFilterName:weakSelf.filterName]);
-                                                   }
-                                               }
-                                           }];
-        
-    } else {
+    } else if (cachedUnfilteredImage && cachedFilteredImage == nil) {
+        [self filterImage:imageAsset forCell:cell unfilteredImage:cachedUnfilteredImage];
+    }
+    
+    else if (cachedFilteredImage) {
         if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
-            [cell configureWithImage:cachedImage];
+            [cell configureWithImage:cachedFilteredImage];
         }
     }
     
     return cell;
 }
+
+#pragma mark - Image Requests
+
+- (void)filterImage:(PHAsset *)imageAsset forCell:(PhotoCollectionViewCell *)cell unfilteredImage:(UIImage *)unfilteredImage {
+    __weak typeof(self) weakSelf = self;
+    
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        CIImage *ciImage = [[CIImage alloc] initWithImage:unfilteredImage options:@{kCIContextWorkingColorSpace:[NSNull null]}];
+        UIImage *filteredImage = [weakSelf processImageWithFilter:weakSelf.filterName image:ciImage asset:imageAsset];
+        if (filteredImage != nil) {
+            [weakSelf.cache setObject:filteredImage forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
+        } else {
+            NSLog(@"filteredImage was nil for key: %@", [imageAsset imageKeyFromFilterName:weakSelf.filterName]);
+        }
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
+                [cell configureWithImage:filteredImage];
+            }
+        }];
+    }];
+    operation.queuePriority = NSOperationQueuePriorityVeryHigh;
+    [self.operationQueue addOperation:operation];
+}
+
+- (void)requestImage:(PHAsset *)imageAsset forCell:(PhotoCollectionViewCell *)cell {
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    __weak typeof(self) weakSelf = self;
+    
+    [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
+                                       contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+
+                                           if (result != nil) {
+                                               [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:UnfilteredImageKey]];
+                                           } else {
+                                               NSLog(@"result was nil for key: %@", [imageAsset imageKeyFromFilterName:UnfilteredImageKey]);
+                                           }
+                                           
+                                           if (weakSelf.filterName) {
+                                               [weakSelf filterImage:imageAsset forCell:cell unfilteredImage:result];
+                                           } else if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier] && weakSelf.filterName == nil) {
+                                               [cell configureWithImage:result];
+                                           }
+                                       }];
+}
+
+#pragma mark - Filter Proccessing
 
 - (UIImage *)processImageWithFilter:(NSString *)filterName image:(CIImage *)ciImage asset:(PHAsset *)imageAsset
 {
@@ -147,7 +171,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     if (cachedImage == nil) {
         CIFilter *filter = [CIFilter filterWithName:filterName];
         [filter setValue:ciImage forKey:kCIInputImageKey];
-        //        [filter.outputImage imageByCroppingToRect:ciImage.extent];
         CGImageRef cgImage = [self.context createCGImage:filter.outputImage fromRect:filter.outputImage.extent];
         UIImage *newImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
@@ -167,6 +190,11 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 
 - (void)didSelectFilter:(NSString *)filterName {
     self.filterName = filterName;
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+}
+
+- (void)resetFilter {
+    self.filterName = nil;
     [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
 }
 

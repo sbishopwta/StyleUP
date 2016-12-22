@@ -10,7 +10,7 @@
 
 @protocol FilterDelegate <NSObject>
 - (void)didSelectFilter:(NSString *)filterName;
-
+- (void)resetFilter;
 @end
 
 

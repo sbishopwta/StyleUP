@@ -8,11 +8,11 @@
 
 #import "FilterSelectionCollectionViewController.h"
 #import "FilterSelectionCollectionViewCell.h"
-#import "NSString+FilterDisplayName.h"
+#import "Filter.h"
 
 @interface FilterSelectionCollectionViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
-@property (strong, nonatomic) NSArray <NSString *> *filters;
+
 @property (weak, nonatomic) id <FilterDelegate> delegate;
 @end
 
@@ -21,7 +21,6 @@
 + (instancetype)buildWithDelegate:(id<FilterDelegate>)delegate {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:NSStringFromClass([FilterSelectionCollectionViewController class]) bundle:nil];
     FilterSelectionCollectionViewController *filterContoller = storyboard.instantiateInitialViewController;
-    filterContoller.filters = @[@"CISepiaTone", @"CIColorInvert", @"CIColorPosterize", @"CIColorMonochrome", @"CIMotionBlur", @"CIPhotoEffectFade", @"CIPhotoEffectNoir", @"CICrystallize", @"CIPhotoEffectInstant", @"CIComicEffect"];
     filterContoller.delegate = delegate;
     filterContoller.title = NSLocalizedString(@"FilterSelectionViewController.Title", nil);
     return filterContoller;
@@ -63,28 +62,28 @@
 }
 
 - (void)reset {
-    [self.delegate didSelectFilter:nil];
+    [self.delegate resetFilter];
     [self dismiss];
 }
 
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return FilterCount;
+    return FilterTypeCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FilterSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FilterSelectionCollectionViewCell class])
                                                                                         forIndexPath:indexPath];
-    NSString *filterName = [NSString displayNameForFilter:indexPath.item];
-    [cell configureWithFilterName:filterName];
+    FilterComposite *filterComposite = [Filter displayNameForFilter:indexPath.item];
+    [cell configureWithFilterName:filterComposite.displayName andImageName:filterComposite.imageName];
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *filterName = self.filters[indexPath.item];
+    NSString *filterName = [Filter displayNameForFilter:indexPath.item].filterName;
     [self.delegate didSelectFilter:filterName];
     [self dismiss];
 }

@@ -12,7 +12,10 @@
 @implementation AppDelegate (Appearance)
 
 -(void)setupTheme {
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"navImgOverlay"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 145, 0, 0) resizingMode:UIImageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"navImgOverlay"]
+                                                      resizableImageWithCapInsets:UIEdgeInsetsMake(0, 145, 0, 0)
+                                                      resizingMode:UIImageResizingModeTile]
+                                       forBarMetrics:UIBarMetricsDefault];
     [UINavigationBar appearance].translucent = NO;
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor],
                                                          NSFontAttributeName: [UIFont primarySemiBoldFont]};

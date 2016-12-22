@@ -10,17 +10,15 @@
 
 @interface FilterSelectionCollectionViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
 @end
 
 @implementation FilterSelectionCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)configureWithFilterName:(NSString *)filterName {
+- (void)configureWithFilterName:(NSString *)filterName andImageName:(NSString *)imageName {
     self.titleLabel.text = filterName;
+    self.imageView.image = [UIImage imageNamed:imageName];
 }
 
 @end

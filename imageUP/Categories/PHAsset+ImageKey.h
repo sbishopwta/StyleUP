@@ -8,7 +8,9 @@
 
 #import <Photos/Photos.h>
 
+extern NSString * const UnfilteredImageKey;
+
 @interface PHAsset (ImageKey)
 - (NSString *)imageKeyFromFilterName:(NSString *)filterName;
-
+- (NSString *)imageKeyForUnfilteredImage;
 @end

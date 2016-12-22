@@ -25,7 +25,7 @@
 }
 
 - (void)configureView {
-     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navTitle"]];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navTitle"]];
     self.settingsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
     self.settingsButton.layer.cornerRadius = CornerRadius;
 }

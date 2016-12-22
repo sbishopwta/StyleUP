@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FilterSelectionCollectionViewCell : UICollectionViewCell
-- (void)configureWithFilterName:(NSString *)filterName;
+- (void)configureWithFilterName:(NSString *)filterName andImageName:(NSString *)imageName;
 
 @end

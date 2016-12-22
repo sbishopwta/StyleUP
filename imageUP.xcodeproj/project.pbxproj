@@ -30,7 +30,7 @@
 		FD901CA71E0BC8DA00CF07E9 /* AppDelegate+Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901CA61E0BC8DA00CF07E9 /* AppDelegate+Appearance.m */; };
 		FD901CAB1E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901CA91E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.m */; };
 		FD901CAC1E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD901CAA1E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.xib */; };
-		FD901CAF1E0C344B00CF07E9 /* NSString+FilterDisplayName.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901CAE1E0C344B00CF07E9 /* NSString+FilterDisplayName.m */; };
+		FD901CB21E0C3CFB00CF07E9 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901CB11E0C3CFB00CF07E9 /* Filter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +81,8 @@
 		FD901CA81E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterSelectionCollectionViewCell.h; path = UI/Filter/FilterSelectionCollectionViewCell.h; sourceTree = "<group>"; };
 		FD901CA91E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterSelectionCollectionViewCell.m; path = UI/Filter/FilterSelectionCollectionViewCell.m; sourceTree = "<group>"; };
 		FD901CAA1E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterSelectionCollectionViewCell.xib; path = UI/Filter/FilterSelectionCollectionViewCell.xib; sourceTree = "<group>"; };
-		FD901CAD1E0C344B00CF07E9 /* NSString+FilterDisplayName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+FilterDisplayName.h"; path = "Categories/NSString+FilterDisplayName.h"; sourceTree = "<group>"; };
-		FD901CAE1E0C344B00CF07E9 /* NSString+FilterDisplayName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+FilterDisplayName.m"; path = "Categories/NSString+FilterDisplayName.m"; sourceTree = "<group>"; };
+		FD901CB01E0C3CFB00CF07E9 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Filter.h; path = UI/Filter/Filter.h; sourceTree = "<group>"; };
+		FD901CB11E0C3CFB00CF07E9 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Filter.m; path = UI/Filter/Filter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +190,8 @@
 				FD901CA81E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.h */,
 				FD901CA91E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.m */,
 				FD901CAA1E0BD4CC00CF07E9 /* FilterSelectionCollectionViewCell.xib */,
+				FD901CB01E0C3CFB00CF07E9 /* Filter.h */,
+				FD901CB11E0C3CFB00CF07E9 /* Filter.m */,
 			);
 			name = "Filter Selection";
 			sourceTree = "<group>";
@@ -203,8 +205,6 @@
 				FD901C9B1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m */,
 				FD901CA51E0BC8DA00CF07E9 /* AppDelegate+Appearance.h */,
 				FD901CA61E0BC8DA00CF07E9 /* AppDelegate+Appearance.m */,
-				FD901CAD1E0C344B00CF07E9 /* NSString+FilterDisplayName.h */,
-				FD901CAE1E0C344B00CF07E9 /* NSString+FilterDisplayName.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -339,9 +339,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD0D40F21E09636C008185B1 /* AppDelegate.m in Sources */,
+				FD901CB21E0C3CFB00CF07E9 /* Filter.m in Sources */,
 				FD901C9C1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m in Sources */,
 				FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */,
-				FD901CAF1E0C344B00CF07E9 /* NSString+FilterDisplayName.m in Sources */,
 				FD0D411F1E0A1D8D008185B1 /* FilterSelectionCollectionViewController.m in Sources */,
 				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
 				FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */,
