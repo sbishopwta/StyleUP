@@ -9,3 +9,4 @@
 "ActionButton.Cancel" = "Cancel";
 "ActionButton.Filter" = "Filter";
 "ActionButton.Reset" = "Reset";
+"FilterSelectionViewController.Title" = "Filter";

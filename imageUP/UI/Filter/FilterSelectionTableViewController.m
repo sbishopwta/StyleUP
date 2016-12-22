@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, Filter) {
     FilterSelectionTableViewController *filterContoller = storyboard.instantiateInitialViewController;
     filterContoller.filters = @[@"CISepiaTone", @"CIColorInvert", @"CIColorPosterize", @"CIColorCrossPolynomial"];
     filterContoller.delegate = delegate;
+    filterContoller.title = NSLocalizedString(@"FilterSelectionViewController.Title", nil);
     return filterContoller;
 }
 
@@ -41,9 +42,9 @@ typedef NS_ENUM(NSInteger, Filter) {
 }
 
 - (void)setupNavigationBar {
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Cancel", nil).uppercaseString style:UIBarButtonItemStyleDone target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = cancelButton;
-    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Reset", nil) style:UIBarButtonItemStyleDone target:self action:@selector(reset)];
+    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Reset", nil).uppercaseString style:UIBarButtonItemStyleDone target:self action:@selector(reset)];
     self.navigationItem.leftBarButtonItem = resetButton;
 }
 

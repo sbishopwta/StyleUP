@@ -31,6 +31,7 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.cache = [NSCache new];
     self.operationQueue = [NSOperationQueue new];
@@ -45,7 +46,10 @@ const NSInteger numberOfColumns = 4;
 }
 
 - (void)setupNavigationBar {
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Filter", nil) style:UIBarButtonItemStylePlain target:self action:@selector(presentFilterSelectionController)];
+    
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navTitle"]];
+    
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ActionButton.Filter", nil).uppercaseString style:UIBarButtonItemStylePlain target:self action:@selector(presentFilterSelectionController)];
     self.navigationItem.rightBarButtonItem = filterButton;
 }
 

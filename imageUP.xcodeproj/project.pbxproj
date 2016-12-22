@@ -22,6 +22,10 @@
 		FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */; };
 		FD901C8C1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */; };
 		FD901C8E1E0BA1FF00CF07E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD901C8D1E0BA1FF00CF07E9 /* Localizable.strings */; };
+		FD901C921E0BA8F300CF07E9 /* proximanova-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD901C8F1E0BA86000CF07E9 /* proximanova-light.ttf */; };
+		FD901C931E0BA8F300CF07E9 /* proximanova-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD901C901E0BA86000CF07E9 /* proximanova-regular.ttf */; };
+		FD901C941E0BA8F300CF07E9 /* proximanova-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */; };
+		FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = FD901C981E0BAA4A00CF07E9 /* Theme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,8 @@
 		FD901C8F1E0BA86000CF07E9 /* proximanova-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-light.ttf"; sourceTree = "<group>"; };
 		FD901C901E0BA86000CF07E9 /* proximanova-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-regular.ttf"; sourceTree = "<group>"; };
 		FD901C911E0BA86000CF07E9 /* proximanova-semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-semibold.ttf"; sourceTree = "<group>"; };
+		FD901C971E0BAA4A00CF07E9 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Theme.h; path = UI/Theme/Theme.h; sourceTree = "<group>"; };
+		FD901C981E0BAA4A00CF07E9 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Theme.m; path = UI/Theme/Theme.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,7 @@
 		FD0D41151E0966B6008185B1 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				FD901C951E0BAA0E00CF07E9 /* Theme */,
 				FD0D411C1E0A1D38008185B1 /* Filter Selection */,
 				FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */,
 			);
@@ -179,6 +186,15 @@
 				FD901C8B1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		FD901C951E0BAA0E00CF07E9 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				FD901C971E0BAA4A00CF07E9 /* Theme.h */,
+				FD901C981E0BAA4A00CF07E9 /* Theme.m */,
+			);
+			name = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +279,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD901C921E0BA8F300CF07E9 /* proximanova-light.ttf in Resources */,
+				FD901C931E0BA8F300CF07E9 /* proximanova-regular.ttf in Resources */,
+				FD901C941E0BA8F300CF07E9 /* proximanova-semibold.ttf in Resources */,
 				FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */,
 				FD0D40FD1E09636C008185B1 /* LaunchScreen.storyboard in Resources */,
 				FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */,
@@ -292,6 +311,7 @@
 				FD0D411F1E0A1D8D008185B1 /* FilterSelectionTableViewController.m in Sources */,
 				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
 				FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */,
+				FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */,
 				FD0D40EF1E09636C008185B1 /* main.m in Sources */,
 				FD901C8C1E0BA0DB00CF07E9 /* PHAsset+ImageKey.m in Sources */,
 			);

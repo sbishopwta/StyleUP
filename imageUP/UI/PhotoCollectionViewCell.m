@@ -21,7 +21,7 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.imageView.image = nil;
+    self.imageView.image = [UIImage imageNamed:@"filter5"];
 }
 
 @end
