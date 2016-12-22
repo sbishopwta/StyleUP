@@ -9,11 +9,17 @@
 /* Begin PBXBuildFile section */
 		FD0D40EF1E09636C008185B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D40EE1E09636C008185B1 /* main.m */; };
 		FD0D40F21E09636C008185B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D40F11E09636C008185B1 /* AppDelegate.m */; };
-		FD0D40F51E09636C008185B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D40F41E09636C008185B1 /* ViewController.m */; };
 		FD0D40F81E09636C008185B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD0D40F61E09636C008185B1 /* Main.storyboard */; };
 		FD0D40FA1E09636C008185B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD0D40F91E09636C008185B1 /* Assets.xcassets */; };
 		FD0D40FD1E09636C008185B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD0D40FB1E09636C008185B1 /* LaunchScreen.storyboard */; };
 		FD0D41081E09636C008185B1 /* imageUPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41071E09636C008185B1 /* imageUPTests.m */; };
+		FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */; };
+		FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */; };
+		FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */; };
+		FD0D411F1E0A1D8D008185B1 /* FilterSelectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D411E1E0A1D8D008185B1 /* FilterSelectionTableViewController.m */; };
+		FD0D41211E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41201E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard */; };
+		FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41231E0A2360008185B1 /* FilterSelectionTableViewCell.m */; };
+		FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,8 +37,6 @@
 		FD0D40EE1E09636C008185B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FD0D40F01E09636C008185B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FD0D40F11E09636C008185B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FD0D40F31E09636C008185B1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		FD0D40F41E09636C008185B1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FD0D40F71E09636C008185B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD0D40F91E09636C008185B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD0D40FC1E09636C008185B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +44,17 @@
 		FD0D41031E09636C008185B1 /* imageUPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = imageUPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0D41071E09636C008185B1 /* imageUPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = imageUPTests.m; sourceTree = "<group>"; };
 		FD0D41091E09636C008185B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD0D41121E0966AD008185B1 /* PhotosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosCollectionViewController.h; path = UI/PhotosCollectionViewController.h; sourceTree = "<group>"; };
+		FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosCollectionViewController.m; path = UI/PhotosCollectionViewController.m; sourceTree = "<group>"; };
+		FD0D41161E09675D008185B1 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCollectionViewCell.h; path = UI/PhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionViewCell.m; path = UI/PhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionViewCell.xib; path = UI/PhotoCollectionViewCell.xib; sourceTree = "<group>"; };
+		FD0D411D1E0A1D8D008185B1 /* FilterSelectionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterSelectionTableViewController.h; path = UI/Filter/FilterSelectionTableViewController.h; sourceTree = "<group>"; };
+		FD0D411E1E0A1D8D008185B1 /* FilterSelectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterSelectionTableViewController.m; path = UI/Filter/FilterSelectionTableViewController.m; sourceTree = "<group>"; };
+		FD0D41201E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FilterSelectionTableViewController.storyboard; path = UI/Filter/FilterSelectionTableViewController.storyboard; sourceTree = "<group>"; };
+		FD0D41221E0A2360008185B1 /* FilterSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterSelectionTableViewCell.h; path = UI/Filter/FilterSelectionTableViewCell.h; sourceTree = "<group>"; };
+		FD0D41231E0A2360008185B1 /* FilterSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterSelectionTableViewCell.m; path = UI/Filter/FilterSelectionTableViewCell.m; sourceTree = "<group>"; };
+		FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterSelectionTableViewCell.xib; path = UI/Filter/FilterSelectionTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +96,10 @@
 		FD0D40EC1E09636C008185B1 /* imageUP */ = {
 			isa = PBXGroup;
 			children = (
+				FD0D41271E0B887C008185B1 /* Utilities */,
 				FD0D40F01E09636C008185B1 /* AppDelegate.h */,
 				FD0D40F11E09636C008185B1 /* AppDelegate.m */,
-				FD0D40F31E09636C008185B1 /* ViewController.h */,
-				FD0D40F41E09636C008185B1 /* ViewController.m */,
+				FD0D41151E0966B6008185B1 /* UI */,
 				FD0D40F61E09636C008185B1 /* Main.storyboard */,
 				FD0D40F91E09636C008185B1 /* Assets.xcassets */,
 				FD0D40FB1E09636C008185B1 /* LaunchScreen.storyboard */,
@@ -109,6 +124,47 @@
 				FD0D41091E09636C008185B1 /* Info.plist */,
 			);
 			path = imageUPTests;
+			sourceTree = "<group>";
+		};
+		FD0D41151E0966B6008185B1 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FD0D411C1E0A1D38008185B1 /* Filter Selection */,
+				FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FD0D41121E0966AD008185B1 /* PhotosCollectionViewController.h */,
+				FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */,
+				FD0D41161E09675D008185B1 /* PhotoCollectionViewCell.h */,
+				FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */,
+				FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */,
+			);
+			name = PhotoCollectionViewController;
+			sourceTree = "<group>";
+		};
+		FD0D411C1E0A1D38008185B1 /* Filter Selection */ = {
+			isa = PBXGroup;
+			children = (
+				FD0D411D1E0A1D8D008185B1 /* FilterSelectionTableViewController.h */,
+				FD0D411E1E0A1D8D008185B1 /* FilterSelectionTableViewController.m */,
+				FD0D41201E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard */,
+				FD0D41221E0A2360008185B1 /* FilterSelectionTableViewCell.h */,
+				FD0D41231E0A2360008185B1 /* FilterSelectionTableViewCell.m */,
+				FD0D41241E0A2360008185B1 /* FilterSelectionTableViewCell.xib */,
+			);
+			name = "Filter Selection";
+			sourceTree = "<group>";
+		};
+		FD0D41271E0B887C008185B1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +216,7 @@
 				TargetAttributes = {
 					FD0D40E91E09636C008185B1 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = QGTZB9G6D4;
 						ProvisioningStyle = Automatic;
 					};
 					FD0D41021E09636C008185B1 = {
@@ -193,7 +250,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD0D41261E0A2360008185B1 /* FilterSelectionTableViewCell.xib in Resources */,
 				FD0D40FD1E09636C008185B1 /* LaunchScreen.storyboard in Resources */,
+				FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */,
+				FD0D41211E0A1F5E008185B1 /* FilterSelectionTableViewController.storyboard in Resources */,
 				FD0D40FA1E09636C008185B1 /* Assets.xcassets in Resources */,
 				FD0D40F81E09636C008185B1 /* Main.storyboard in Resources */,
 			);
@@ -213,8 +273,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD0D40F51E09636C008185B1 /* ViewController.m in Sources */,
 				FD0D40F21E09636C008185B1 /* AppDelegate.m in Sources */,
+				FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */,
+				FD0D411F1E0A1D8D008185B1 /* FilterSelectionTableViewController.m in Sources */,
+				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
+				FD0D41251E0A2360008185B1 /* FilterSelectionTableViewCell.m in Sources */,
 				FD0D40EF1E09636C008185B1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = QGTZB9G6D4;
 				INFOPLIST_FILE = imageUP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = stevenbishop.imageUP;
@@ -362,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = QGTZB9G6D4;
 				INFOPLIST_FILE = imageUP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = stevenbishop.imageUP;

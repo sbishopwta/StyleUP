@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PhotosCollectionViewController.h
 //  imageUP
 //
 //  Created by Steven Bishop on 12/20/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PhotosCollectionViewController : UICollectionViewController
 
 @end
-
