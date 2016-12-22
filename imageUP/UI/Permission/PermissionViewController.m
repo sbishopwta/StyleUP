@@ -8,7 +8,7 @@
 
 #import "PermissionViewController.h"
 #import "Theme.h"
-#import "PhotosCollectionViewController.h"
+#import "PhotoGridCollectionViewController.h"
 #import <Photos/Photos.h>
 
 @interface PermissionViewController ()
@@ -36,7 +36,7 @@
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         if (status == PHAuthorizationStatusAuthorized) {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            PhotosCollectionViewController *photosController = [storyboard instantiateViewControllerWithIdentifier:@"PhotosCollectionViewController"];
+            PhotoGridCollectionViewController *photosController = [storyboard instantiateViewControllerWithIdentifier:@"PhotoGridCollectionViewController"];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController setViewControllers:@[photosController]];
             });

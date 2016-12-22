@@ -16,12 +16,6 @@
 
 @implementation PhotoCollectionViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-//    self.imageView.layer.cornerRadius = CornerRadius;
-//    self.imageView.layer.masksToBounds = YES;
-}
-
 - (void)configureWithImage:(UIImage *)image {
     self.imageView.image = image;
 }

@@ -7,15 +7,15 @@
 //
 
 #import "FilterSelectionCollectionViewController.h"
-#import "PhotosCollectionViewController.h"
+#import "PhotoGridCollectionViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import <Photos/Photos.h>
 #import "PHAsset+ImageKey.h"
 #import "UICollectionViewCell+ReusableIdentifier.h"
 
-@interface PhotosCollectionViewController () <FilterDelegate>
+@interface PhotoGridCollectionViewController () <FilterDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
-@property (strong, nonatomic) PHFetchResult<PHAsset *> *allPhotos;
+@property (strong, nonatomic) PHFetchResult<PHAsset *> *photos;
 @property (strong, nonatomic) PHCachingImageManager *imageCachingManager;
 @property (strong, nonatomic) CIContext *context;
 @property (copy, nonatomic) NSString *filterName;
@@ -24,9 +24,7 @@
 
 @end
 
-@implementation PhotosCollectionViewController
-
-NSString * const PhotoSortDescriptorKey = @"creationDate";
+@implementation PhotoGridCollectionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,13 +38,11 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 - (void)setup {
     self.cache = [NSCache new];
     self.operationQueue = [NSOperationQueue new];
-    [NSOperationQueue mainQueue].maxConcurrentOperationCount = 50;
-    self.operationQueue.maxConcurrentOperationCount = 50;
     EAGLContext *myEAGLContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
     self.context = [CIContext contextWithEAGLContext:myEAGLContext options:options];
     self.imageCachingManager = [PHCachingImageManager new];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionViewCell" bundle:nil]
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([PhotoCollectionViewCell class]) bundle:nil]
           forCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]];
 }
 
@@ -61,6 +57,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 }
 
 - (void)presentFilterSelectionController {
+    [self.operationQueue cancelAllOperations];
     FilterSelectionCollectionViewController *filterSelectionController = [FilterSelectionCollectionViewController buildWithDelegate:self];
     UINavigationController *filterSelectionNavigationController = [[UINavigationController alloc] initWithRootViewController:filterSelectionController];
     [self.navigationController presentViewController:filterSelectionNavigationController animated:YES completion:nil];
@@ -68,8 +65,8 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 
 - (void)requestPhotoAssets {
     PHFetchOptions *fetchOptions = [PHFetchOptions new];
-    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:PhotoSortDescriptorKey ascending:false]];
-    self.allPhotos = [PHAsset fetchAssetsWithOptions:fetchOptions];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:false]];
+    self.photos = [PHAsset fetchAssetsWithOptions:fetchOptions];
 }
 
 - (void)configureItemSize {
@@ -82,17 +79,17 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     self.flowLayout.itemSize = cellSize;
 }
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.allPhotos.count;
+    return self.photos.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PhotoCollectionViewCell reuseIdentifier]
                                                                               forIndexPath:indexPath];
     
-    PHAsset *imageAsset = [self.allPhotos objectAtIndex:indexPath.item];
+    PHAsset *imageAsset = [self.photos objectAtIndex:indexPath.item];
     cell.imageIdentifier = imageAsset.localIdentifier;
     NSString *filteredImageKey = [imageAsset imageKeyFromFilterName:self.filterName];
     NSString *unfilteredImageKey = [imageAsset imageKeyForUnfilteredImage];
@@ -101,12 +98,9 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     
     if (cachedFilteredImage == nil && cachedUnfilteredImage == nil) {
         [self requestImage:imageAsset forCell:cell];
-        
     } else if (cachedUnfilteredImage && cachedFilteredImage == nil) {
-        [self filterImage:imageAsset forCell:cell unfilteredImage:cachedUnfilteredImage];
-    }
-    
-    else if (cachedFilteredImage) {
+        [self filterImage:cachedUnfilteredImage withAsset:imageAsset forCell:cell];
+    } else if (cachedFilteredImage) {
         if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
             [cell configureWithImage:cachedFilteredImage];
         }
@@ -117,7 +111,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 
 #pragma mark - Image Requests
 
-- (void)filterImage:(PHAsset *)imageAsset forCell:(PhotoCollectionViewCell *)cell unfilteredImage:(UIImage *)unfilteredImage {
+- (void)filterImage:(UIImage *)unfilteredImage withAsset:(PHAsset *)imageAsset forCell:(PhotoCollectionViewCell *)cell  {
     __weak typeof(self) weakSelf = self;
     
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
@@ -125,8 +119,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
         UIImage *filteredImage = [weakSelf processImageWithFilter:weakSelf.filterName image:ciImage asset:imageAsset];
         if (filteredImage != nil) {
             [weakSelf.cache setObject:filteredImage forKey:[imageAsset imageKeyFromFilterName:weakSelf.filterName]];
-        } else {
-            NSLog(@"filteredImage was nil for key: %@", [imageAsset imageKeyFromFilterName:weakSelf.filterName]);
         }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier]) {
@@ -142,6 +134,7 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
     
     PHImageRequestOptions *options = [PHImageRequestOptions new];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+
     __weak typeof(self) weakSelf = self;
     
     [self.imageCachingManager requestImageForAsset:imageAsset targetSize:self.flowLayout.itemSize
@@ -149,14 +142,14 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
 
                                            if (result != nil) {
                                                [self.cache setObject:result forKey:[imageAsset imageKeyFromFilterName:UnfilteredImageKey]];
-                                           } else {
-                                               NSLog(@"result was nil for key: %@", [imageAsset imageKeyFromFilterName:UnfilteredImageKey]);
                                            }
                                            
                                            if (weakSelf.filterName) {
-                                               [weakSelf filterImage:imageAsset forCell:cell unfilteredImage:result];
+                                               [weakSelf filterImage:result withAsset:imageAsset forCell:cell];
                                            } else if ([cell.imageIdentifier isEqualToString:imageAsset.localIdentifier] && weakSelf.filterName == nil) {
-                                               [cell configureWithImage:result];
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   [cell configureWithImage:result];
+                                               });
                                            }
                                        }];
 }
@@ -176,8 +169,6 @@ NSString * const PhotoSortDescriptorKey = @"creationDate";
         CGImageRelease(cgImage);
         if (newImage != nil) {
             [self.cache setObject:newImage forKey:imageKey];
-        } else {
-            NSLog(@"newImage was nil for key: %@", imageKey);
         }
         
         return newImage;

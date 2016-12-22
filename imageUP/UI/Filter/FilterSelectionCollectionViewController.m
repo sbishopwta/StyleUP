@@ -9,6 +9,7 @@
 #import "FilterSelectionCollectionViewController.h"
 #import "FilterSelectionCollectionViewCell.h"
 #import "Filter.h"
+#import "UICollectionViewCell+ReusableIdentifier.h"
 
 @interface FilterSelectionCollectionViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
@@ -34,7 +35,7 @@
 
 - (void)setupCollectionView {
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([FilterSelectionCollectionViewCell class]) bundle:nil]
-          forCellWithReuseIdentifier:NSStringFromClass([FilterSelectionCollectionViewCell class])];
+          forCellWithReuseIdentifier:[FilterSelectionCollectionViewCell reuseIdentifier]];
     CGSize screenSize = self.view.frame.size;
     NSInteger numberOfColumns = 2;
     double sectionInsetPadding = self.flowLayout.sectionInset.left + self.flowLayout.sectionInset.right;
@@ -73,7 +74,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    FilterSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FilterSelectionCollectionViewCell class])
+    FilterSelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[FilterSelectionCollectionViewCell reuseIdentifier]
                                                                                         forIndexPath:indexPath];
     FilterComposite *filterComposite = [Filter displayNameForFilter:indexPath.item];
     [cell configureWithFilterName:filterComposite.displayName andImageName:filterComposite.imageName];

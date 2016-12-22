@@ -13,7 +13,7 @@
 		FD0D40FA1E09636C008185B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD0D40F91E09636C008185B1 /* Assets.xcassets */; };
 		FD0D40FD1E09636C008185B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD0D40FB1E09636C008185B1 /* LaunchScreen.storyboard */; };
 		FD0D41081E09636C008185B1 /* imageUPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41071E09636C008185B1 /* imageUPTests.m */; };
-		FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */; };
+		FD0D41141E0966AD008185B1 /* PhotoGridCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41131E0966AD008185B1 /* PhotoGridCollectionViewController.m */; };
 		FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */; };
 		FD0D411A1E09675D008185B1 /* PhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */; };
 		FD0D411F1E0A1D8D008185B1 /* FilterSelectionCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D411E1E0A1D8D008185B1 /* FilterSelectionCollectionViewController.m */; };
@@ -55,8 +55,8 @@
 		FD0D41031E09636C008185B1 /* imageUPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = imageUPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD0D41071E09636C008185B1 /* imageUPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = imageUPTests.m; sourceTree = "<group>"; };
 		FD0D41091E09636C008185B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FD0D41121E0966AD008185B1 /* PhotosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosCollectionViewController.h; path = UI/PhotosCollectionViewController.h; sourceTree = "<group>"; };
-		FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosCollectionViewController.m; path = UI/PhotosCollectionViewController.m; sourceTree = "<group>"; };
+		FD0D41121E0966AD008185B1 /* PhotoGridCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGridCollectionViewController.h; path = UI/PhotoGridCollectionViewController.h; sourceTree = "<group>"; };
+		FD0D41131E0966AD008185B1 /* PhotoGridCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGridCollectionViewController.m; path = UI/PhotoGridCollectionViewController.m; sourceTree = "<group>"; };
 		FD0D41161E09675D008185B1 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCollectionViewCell.h; path = UI/PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionViewCell.m; path = UI/PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionViewCell.xib; path = UI/PhotoCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -164,21 +164,21 @@
 				FD901C9D1E0BC6C000CF07E9 /* Permission */,
 				FD901C951E0BAA0E00CF07E9 /* Theme */,
 				FD0D411C1E0A1D38008185B1 /* Filter Selection */,
-				FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */,
+				FD0D411B1E0A1D19008185B1 /* Photo Grid */,
 			);
 			name = UI;
 			sourceTree = "<group>";
 		};
-		FD0D411B1E0A1D19008185B1 /* PhotoCollectionViewController */ = {
+		FD0D411B1E0A1D19008185B1 /* Photo Grid */ = {
 			isa = PBXGroup;
 			children = (
-				FD0D41121E0966AD008185B1 /* PhotosCollectionViewController.h */,
-				FD0D41131E0966AD008185B1 /* PhotosCollectionViewController.m */,
+				FD0D41121E0966AD008185B1 /* PhotoGridCollectionViewController.h */,
+				FD0D41131E0966AD008185B1 /* PhotoGridCollectionViewController.m */,
 				FD0D41161E09675D008185B1 /* PhotoCollectionViewCell.h */,
 				FD0D41171E09675D008185B1 /* PhotoCollectionViewCell.m */,
 				FD0D41181E09675D008185B1 /* PhotoCollectionViewCell.xib */,
 			);
-			name = PhotoCollectionViewController;
+			name = "Photo Grid";
 			sourceTree = "<group>";
 		};
 		FD0D411C1E0A1D38008185B1 /* Filter Selection */ = {
@@ -343,7 +343,7 @@
 				FD901C9C1E0BBEA000CF07E9 /* UICollectionViewCell+ReusableIdentifier.m in Sources */,
 				FD0D41191E09675D008185B1 /* PhotoCollectionViewCell.m in Sources */,
 				FD0D411F1E0A1D8D008185B1 /* FilterSelectionCollectionViewController.m in Sources */,
-				FD0D41141E0966AD008185B1 /* PhotosCollectionViewController.m in Sources */,
+				FD0D41141E0966AD008185B1 /* PhotoGridCollectionViewController.m in Sources */,
 				FD901C991E0BAA4A00CF07E9 /* Theme.m in Sources */,
 				FD0D40EF1E09636C008185B1 /* main.m in Sources */,
 				FD901CA71E0BC8DA00CF07E9 /* AppDelegate+Appearance.m in Sources */,
