@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  styleUP
+
+  Created by Steven Bishop on 12/22/16.
+  Copyright © 2016 Steven Bishop. All rights reserved.
+*/
+
+"ActionButton.Cancel" = "Cancel";
+"ActionButton.Filter" = "Filter";
+"ActionButton.Reset" = "Reset";
+"FilterSelectionViewController.Title" = "Filter";
+"Filter.Name.Sepia" = "Sepia";
+"Filter.Name.ColorInvert" = "Color Invert";
+"Filter.Name.Posterize" = "Posterize";
+"Filter.Name.Monochrome" = "Monochrome";
+"Filter.Name.MotionBlur" = "Motion Blur";
+"Filter.Name.Fade" = "Fade";
+"Filter.Name.Noir" = "Noir";
+"Filter.Name.Crystallize" = "Crystallize";
+"Filter.Name.Instant" = "Instant";
+"Filter.Name.Comic" = "Comic";
